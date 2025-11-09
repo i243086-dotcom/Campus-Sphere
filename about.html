@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Sphere - About</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #6a11cb;
+            --secondary: #2575fc;
+            --sidebar-bg: #2c3e50;
+            --sidebar-hover: #34495e;
+            --content-bg: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-dark: #2d3748;
+            --text-light: #718096;
+            --border: #e2e8f0;
+        }
+
+        body {
+            background-color: var(--content-bg);
+            color: var(--text-dark);
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 250px;
+            background: var(--sidebar-bg);
+            color: white;
+            padding: 1.5rem 0;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .logo {
+            text-align: center;
+            padding: 0 1.5rem 2rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 1rem;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .user-profile {
+            text-align: center;
+            padding: 0 1.5rem 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 1rem;
+        }
+
+        .user-avatar {
+            width: 80px;
+            height: 80px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 2rem;
+            font-weight: 600;
+            color: white;
+        }
+
+        .user-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .user-role {
+            font-size: 0.9rem;
+            color: #bdc3c7;
+        }
+
+        .nav-links {
+            list-style: none;
+            padding: 0 1rem;
+        }
+
+        .nav-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-links a {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            color: #bdc3c7;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            background: var(--sidebar-hover);
+            color: white;
+        }
+
+        .main-content {
+            flex: 1;
+            margin-left: 250px;
+            padding: 2rem;
+        }
+
+        .page-header {
+            background: var(--card-bg);
+            padding: 3rem 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+            text-align: center;
+            border-left: 4px solid var(--primary);
+        }
+
+        .page-header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-header .tagline {
+            font-size: 1.3rem;
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        .content-section {
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--text-dark);
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid var(--primary);
+            display: inline-block;
+        }
+
+        .problem-statement {
+            background: linear-gradient(135deg, #fff5f5, #fff0f0);
+            border-left: 4px solid #e53e3e;
+        }
+
+        .solution {
+            background: linear-gradient(135deg, #f0fff4, #e6fffa);
+            border-left: 4px solid #38a169;
+        }
+
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+
+        .problem-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .problem-card h3 {
+            color: #e53e3e;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .problem-card p {
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        .solution-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-dark);
+        }
+
+        .solution-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 5px;
+            font-weight: 600;
+        }
+
+        .benefits-list {
+            list-style: none;
+            margin-top: 1.5rem;
+        }
+
+        .benefits-list li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border);
+            position: relative;
+            padding-left: 2.5rem;
+            font-size: 1.1rem;
+        }
+
+        .benefits-list li:before {
+            content: "✅";
+            position: absolute;
+            left: 0;
+            font-size: 1.2rem;
+        }
+
+        .benefits-list li:last-child {
+            border-bottom: none;
+        }
+
+        .mission-statement {
+            text-align: center;
+            font-style: italic;
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin: 2rem 0;
+            padding: 2rem;
+            background: linear-gradient(135deg, #f0f4ff, #f0f0ff);
+            border-radius: 10px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .vision {
+            background: linear-gradient(135deg, #f0f8ff, #f5f0ff);
+            border-left: 4px solid #805ad5;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .gallery-item {
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            aspect-ratio: 1;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.03);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+            animation: fadeIn 0.3s;
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            max-width: 90%;
+            max-height: 80%;
+            margin-top: 2%;
+            border-radius: 8px;
+        }
+
+        .modal-info {
+            text-align: center;
+            color: white;
+            padding: 1rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .close {
+            position: absolute;
+            top: 20px;
+            right: 35px;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .close:hover {
+            color: #bbb;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+            
+            .main-content {
+                margin-left: 0;
+                padding: 1rem;
+            }
+            
+            .problem-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .page-header .tagline {
+                font-size: 1.1rem;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <h1>Campus Sphere</h1>
+        </div>
+
+        <div class="user-profile">
+            <div class="user-avatar">MK</div>
+            <div class="user-name">mominakhawaja.23</div>
+            <div class="user-role">Student</div>
+        </div>
+
+        <ul class="nav-links">
+            <li><a href="student-home.html">🏠 Home</a></li>
+            <li><a href="societies.html">🎯 Societies</a></li>
+            <li><a href="events.html">📅 Events</a></li>
+            <li><a href="gallery.html">📸 Gallery</a></li>
+            <li><a href="contact.html">📞 Contact</a></li>
+            <li><a href="about.html" class="active">ℹ️ About</a></li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <div class="page-header">
+            <h1>About Campus Sphere</h1>
+            <p class="tagline">A digital system that unites all student societies for easy access to events, memberships, and reviews.</p>
+        </div>
+
+        <div class="mission-statement">
+            "Connecting students with campus life, one society at a time."
+        </div>
+
+        <div class="content-section problem-statement">
+            <h2 class="section-title">The Problem We Solve</h2>
+            <div class="problem-grid">
+                <div class="problem-card">
+                    <h3>The Problem of:</h3>
+                    <p>Student societies managing their events, memberships, and announcements separately on different social media platforms.</p>
+                </div>
+                <div class="problem-card">
+                    <h3>Affects:</h3>
+                    <p>University students who want to explore and join societies, as well as society organizers who want to promote their events and manage members easily.</p>
+                </div>
+                <div class="problem-card">
+                    <h3>The Impact:</h3>
+                    <p>Students often miss updates, face difficulty in finding event details, and get confused about society information, while organizers struggle to manage everything properly.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section solution">
+            <h2 class="section-title">Our Solution</h2>
+            <div class="solution-content">
+                <p><span class="highlight">Campus Sphere</span> is a simple and user-friendly web system that brings all societies together in one place. It will let students view societies, check upcoming events, register for competitions or memberships, and share feedback.</p>
+                
+                <p>Society admins will be able to update event details, manage members, and post announcements easily. This will make communication smoother, increase student participation, and create a more connected campus community.</p>
+
+                <h3 style="margin-top: 2rem; color: var(--text-dark);">Key Benefits:</h3>
+                <ul class="benefits-list">
+                    <li>Centralized platform for all campus societies</li>
+                    <li>Easy event discovery and registration</li>
+                    <li>Streamlined membership management</li>
+                    <li>Improved communication between societies and students</li>
+                    <li>Increased student engagement and participation</li>
+                    <li>Reduced administrative burden for society organizers</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">Campus Sphere in Action</h2>
+            <div class="gallery-grid" id="aboutGallery">
+            </div>
+        </div>
+
+        <div class="content-section vision">
+            <h2 class="section-title">Our Vision</h2>
+            <div class="solution-content">
+                <p>We envision a campus where every student can easily discover and engage with societies that match their interests, where society organizers can focus on creating amazing experiences rather than administrative tasks, and where the entire university community feels more connected and engaged.</p>
+                
+                <p>By bringing all campus activities under one digital roof, Campus Sphere aims to transform how students experience university life beyond the classroom.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="imageModal" class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="modalImage">
+        <div class="modal-info">
+            <h2 class="modal-title" id="modalTitle"></h2>
+        </div>
+    </div>
+
+    <script>
+        const aboutGalleryData = [
+            "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            "https://images.unsplash.com/photo-1523580494863-6f3031224c94?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            "https://images.unsplash.com/photo-1498243691581-b145c3f54a5a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+            "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+        ];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const problemCards = document.querySelectorAll('.problem-card');
+            
+            problemCards.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.1}s`;
+                card.classList.add('fade-in');
+            });
+
+            loadAboutGallery();
+        });
+
+        function loadAboutGallery() {
+            const gallery = document.getElementById('aboutGallery');
+            gallery.innerHTML = aboutGalleryData.map((photo, index) => `
+                <div class="gallery-item" onclick="openModal('Campus Sphere', '${photo}')">
+                    <img src="${photo}" alt="Campus Sphere - Photo ${index + 1}">
+                </div>
+            `).join('');
+        }
+
+        function openModal(title, imageSrc) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            const modalTitle = document.getElementById('modalTitle');
+            
+            modalImg.src = imageSrc;
+            modalImg.alt = title;
+            modalTitle.textContent = title;
+            
+            modal.style.display = "block";
+        }
+
+        document.querySelector('.close').addEventListener('click', function() {
+            document.getElementById('imageModal').style.display = "none";
+        });
+
+        window.addEventListener('click', function(event) {
+            const modal = document.getElementById('imageModal');
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        });
+    </script>
+</body>
+</html>

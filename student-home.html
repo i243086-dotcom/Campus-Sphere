@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Sphere - Student Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #6a11cb;
+            --secondary: #2575fc;
+            --sidebar-bg: #2c3e50;
+            --sidebar-hover: #34495e;
+            --content-bg: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-dark: #2d3748;
+            --text-light: #718096;
+            --border: #e2e8f0;
+        }
+
+        body {
+            background-color: var(--content-bg);
+            color: var(--text-dark);
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 250px;
+            background: var(--sidebar-bg);
+            color: white;
+            padding: 1.5rem 0;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .logo {
+            text-align: center;
+            padding: 0 1.5rem 2rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 1rem;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .user-profile {
+            text-align: center;
+            padding: 0 1.5rem 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 1rem;
+        }
+
+        .user-avatar {
+            width: 80px;
+            height: 80px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 2rem;
+            font-weight: 600;
+            color: white;
+        }
+
+        .user-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .user-role {
+            font-size: 0.9rem;
+            color: #bdc3c7;
+        }
+
+        .nav-links {
+            list-style: none;
+            padding: 0 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .nav-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-links a {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            color: #bdc3c7;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            background: var(--sidebar-hover);
+            color: white;
+        }
+
+        .nav-links i {
+            margin-right: 10px;
+            font-size: 1.1rem;
+        }
+
+        .logout-section {
+            padding: 0 1rem;
+            margin-top: auto;
+        }
+
+        .logout-btn {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: rgba(220, 53, 69, 0.1);
+            color: #dc3545;
+            border: 1px solid rgba(220, 53, 69, 0.2);
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .logout-btn:hover {
+            background: rgba(220, 53, 69, 0.2);
+            border-color: rgba(220, 53, 69, 0.3);
+        }
+
+        .logout-btn i {
+            margin-right: 10px;
+            font-size: 1.1rem;
+        }
+
+        .main-content {
+            flex: 1;
+            margin-left: 250px;
+            padding: 2rem;
+        }
+
+        .welcome-section {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+            border-left: 4px solid var(--primary);
+        }
+
+        .welcome-section h1 {
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+            font-size: 1.8rem;
+        }
+
+        .welcome-section p {
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+
+        .dashboard-section {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-light);
+        }
+
+        .empty-state p {
+            margin-bottom: 1rem;
+        }
+
+        .profile-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .info-card {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 10px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .info-card h3 {
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+            font-size: 1.1rem;
+        }
+
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .info-item:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .info-value {
+            color: var(--text-light);
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+            
+            .main-content {
+                margin-left: 0;
+                padding: 1rem;
+            }
+            
+            .profile-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <h1>Campus Sphere</h1>
+        </div>
+
+        <div class="user-profile">
+            <div class="user-avatar">MK</div>
+            <div class="user-name">mominakhawaja.23</div>
+            <div class="user-role">Student</div>
+        </div>
+
+        <ul class="nav-links">
+            <li><a href="student-home.html" class="active">🏠 Home</a></li>
+            <li><a href="societies.html">🎯 Societies</a></li>
+            <li><a href="events.html">📅 Events</a></li>
+            <li><a href="gallery.html">📸 Gallery</a></li>
+            <li><a href="contact.html">📞 Contact</a></li>
+            <li><a href="about.html">ℹ️ About</a></li>
+        </ul>
+
+        <div class="logout-section">
+            <a href="login.html" class="logout-btn">
+                🚪 Logout
+            </a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="welcome-section">
+            <h1>Welcome, mominkhawaja.23!</h1>
+            <p>Here's what's happening on your campus.</p>
+        </div>
+
+        <div class="dashboard-section">
+            <h2 class="section-title">Student Profile</h2>
+            <div class="profile-grid">
+                <div class="info-card">
+                    <h3>University Information</h3>
+                    <div class="info-item">
+                        <span class="info-label">Roll No:</span>
+                        <span class="info-value">241-3154</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Section:</span>
+                        <span class="info-value">BSE-243A</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Degree:</span>
+                        <span class="info-value">BS(SE)</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Campus:</span>
+                        <span class="info-value">Islamabad</span>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <h3>Personal Information</h3>
+                    <div class="info-item">
+                        <span class="info-label">Name:</span>
+                        <span class="info-value">Khawaja Mornin Shafique</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Gender:</span>
+                        <span class="info-value">Male</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Email:</span>
+                        <span class="info-value">morninkhawaia.23@gmail.com</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">DOB:</span>
+                        <span class="info-value">7/7/2004</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">CNIC:</span>
+                        <span class="info-value">82203-8761889-5</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Mobile No:</span>
+                        <span class="info-value">0312-9823452</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="dashboard-section">
+            <h2 class="section-title">My Registered Events</h2>
+            <div class="empty-state">
+                <p>You haven't registered for any events yet.</p>
+            </div>
+        </div>
+
+        <div class="dashboard-section">
+            <h2 class="section-title">My Societies</h2>
+            <div class="empty-state">
+                <p>You haven't joined any societies yet.</p>
+            </div>
+        </div>
+
+        <div class="dashboard-section">
+            <h2 class="section-title">Event Recommendations</h2>
+            <div class="empty-state">
+                <p>Join societies to get event recommendations.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            
+        });
+    </script>
+</body>
+</html>

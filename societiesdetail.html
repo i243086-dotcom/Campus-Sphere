@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Sphere - Society Profile</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #6a11cb;
+            --secondary: #2575fc;
+            --sidebar-bg: #2c3e50;
+            --sidebar-hover: #34495e;
+            --content-bg: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-dark: #2d3748;
+            --text-light: #718096;
+            --border: #e2e8f0;
+        }
+
+        body {
+            background-color: var(--content-bg);
+            color: var(--text-dark);
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 250px;
+            background: var(--sidebar-bg);
+            color: white;
+            padding: 1.5rem 0;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .logo {
+            text-align: center;
+            padding: 0 1.5rem 2rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 1rem;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .user-profile {
+            text-align: center;
+            padding: 0 1.5rem 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 1rem;
+        }
+
+        .user-avatar {
+            width: 80px;
+            height: 80px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 2rem;
+            font-weight: 600;
+            color: white;
+        }
+
+        .user-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .user-role {
+            font-size: 0.9rem;
+            color: #bdc3c7;
+        }
+
+        .nav-links {
+            list-style: none;
+            padding: 0 1rem;
+        }
+
+        .nav-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-links a {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            color: #bdc3c7;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            background: var(--sidebar-hover);
+            color: white;
+        }
+
+        .main-content {
+            flex: 1;
+            margin-left: 250px;
+            padding: 2rem;
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            transition: all 0.3s;
+        }
+
+        .back-button:hover {
+            background: var(--secondary);
+        }
+
+        .society-header {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+            display: flex;
+            gap: 2rem;
+            align-items: flex-start;
+        }
+
+        .society-logo {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+            flex-shrink: 0;
+        }
+
+        .society-info {
+            flex: 1;
+        }
+
+        .society-name {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+
+        .society-description {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .society-stats {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .join-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .join-btn:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        .join-btn.joined {
+            background: #27ae60;
+        }
+
+        .content-section {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--text-dark);
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .aims-list, .activities-list {
+            list-style: none;
+            padding-left: 1rem;
+        }
+
+        .aims-list li, .activities-list li {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border);
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .aims-list li:before {
+            content: "🎯";
+            position: absolute;
+            left: 0;
+        }
+
+        .activities-list li:before {
+            content: "⭐";
+            position: absolute;
+            left: 0;
+        }
+
+        .aims-list li:last-child, .activities-list li:last-child {
+            border-bottom: none;
+        }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--content-bg);
+            border-radius: 8px;
+        }
+
+        .contact-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .gallery-item {
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            aspect-ratio: 1;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.03);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+            animation: fadeIn 0.3s;
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            max-width: 90%;
+            max-height: 80%;
+            margin-top: 2%;
+            border-radius: 8px;
+        }
+
+        .modal-info {
+            text-align: center;
+            color: white;
+            padding: 1rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .close {
+            position: absolute;
+            top: 20px;
+            right: 35px;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .close:hover {
+            color: #bbb;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+            
+            .main-content {
+                margin-left: 0;
+                padding: 1rem;
+            }
+            
+            .society-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .society-stats {
+                justify-content: center;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo">
+            <h1>Campus Sphere</h1>
+        </div>
+
+        <div class="user-profile">
+            <div class="user-avatar">MK</div>
+            <div class="user-name">mominakhawaja.23</div>
+            <div class="user-role">Student</div>
+        </div>
+
+        <ul class="nav-links">
+            <li><a href="student-home.html">🏠 Home</a></li>
+            <li><a href="societies.html">🎯 Societies</a></li>
+            <li><a href="events.html">📅 Events</a></li>
+            <li><a href="gallery.html">📸 Gallery</a></li>
+            <li><a href="contact.html">📞 Contact</a></li>
+            <li><a href="about.html">ℹ️ About</a></li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <a href="societies.html" class="back-button">← Back to Societies</a>
+
+        <div class="society-header">
+            <div class="society-logo" id="societyLogo">💻</div>
+            <div class="society-info">
+                <h1 class="society-name" id="societyName">Tech Club</h1>
+                <p class="society-description" id="societyDescription">A community for technology enthusiasts to learn, share, and innovate together through workshops, hackathons, and tech talks.</p>
+                
+                <div class="society-stats">
+                    <div class="stat">
+                        <div class="stat-number" id="membersCount">150</div>
+                        <div class="stat-label">Members</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number" id="eventsCount">12</div>
+                        <div class="stat-label">Events</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number" id="foundedYear">2020</div>
+                        <div class="stat-label">Founded</div>
+                    </div>
+                </div>
+
+                <button class="join-btn" id="joinBtn" onclick="toggleJoin()">Join Society</button>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">Aims & Objectives</h2>
+            <ul class="aims-list" id="aimsList">
+            </ul>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">Key Activities</h2>
+            <ul class="activities-list" id="activitiesList">
+            </ul>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">Society Gallery</h2>
+            <div class="gallery-grid" id="societyGallery">
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">Contact Information</h2>
+            <div class="contact-info" id="contactInfo">
+            </div>
+        </div>
+    </div>
+
+    <div id="imageModal" class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="modalImage">
+        <div class="modal-info">
+            <h2 class="modal-title" id="modalTitle"></h2>
+        </div>
+    </div>
+
+    <script>
+        const societyData = {
+            id: 1,
+            name: "Tech Club",
+            description: "A community for technology enthusiasts to learn, share, and innovate together through workshops, hackathons, and tech talks.",
+            logo: "💻",
+            members: 150,
+            events: 12,
+            founded: 2020,
+            aims: [
+                "Foster technological innovation among students",
+                "Provide platform for skill development through collaborative projects",
+                "Organize workshops and hackathons for practical learning",
+                "Connect students with industry professionals"
+            ],
+            activities: [
+                "Weekly coding sessions and workshops",
+                "Annual hackathon competition",
+                "Tech talks from industry experts",
+                "Project collaboration opportunities",
+                "Programming competitions"
+            ],
+            gallery: [
+                "https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                "https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                "https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+                "https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+            ],
+            contact: [
+                {
+                    type: "President",
+                    name: "Ali Ahmed",
+                    email: "president@techclub.edu"
+                },
+                {
+                    type: "Faculty Advisor",
+                    name: "Dr. Sarah Khan",
+                    email: "s.khan@university.edu"
+                },
+                {
+                    type: "General Inquiries",
+                    name: "Tech Club Team",
+                    email: "techclub@campus.edu"
+                }
+            ]
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            loadSocietyData();
+        });
+
+        function loadSocietyData() {
+            document.getElementById('societyName').textContent = societyData.name;
+            document.getElementById('societyDescription').textContent = societyData.description;
+            document.getElementById('societyLogo').textContent = societyData.logo;
+            document.getElementById('membersCount').textContent = societyData.members;
+            document.getElementById('eventsCount').textContent = societyData.events;
+            document.getElementById('foundedYear').textContent = societyData.founded;
+
+            const aimsList = document.getElementById('aimsList');
+            aimsList.innerHTML = societyData.aims.map(aim => 
+                `<li>${aim}</li>`
+            ).join('');
+
+            const activitiesList = document.getElementById('activitiesList');
+            activitiesList.innerHTML = societyData.activities.map(activity => 
+                `<li>${activity}</li>`
+            ).join('');
+
+            const gallery = document.getElementById('societyGallery');
+            gallery.innerHTML = societyData.gallery.map((photo, index) => `
+                <div class="gallery-item" onclick="openModal('${societyData.name}', '${photo}')">
+                    <img src="${photo}" alt="${societyData.name} - Photo ${index + 1}">
+                </div>
+            `).join('');
+
+            const contactInfo = document.getElementById('contactInfo');
+            contactInfo.innerHTML = societyData.contact.map(contact => `
+                <div class="contact-item">
+                    <div class="contact-icon">📧</div>
+                    <div>
+                        <strong>${contact.type}</strong><br>
+                        ${contact.name}<br>
+                        ${contact.email}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function toggleJoin() {
+            const button = document.getElementById('joinBtn');
+            if (button.classList.contains('joined')) {
+                button.classList.remove('joined');
+                button.textContent = 'Join Society';
+                alert(`You left ${societyData.name}`);
+            } else {
+                button.classList.add('joined');
+                button.textContent = 'Joined';
+                alert(`You joined ${societyData.name}!`);
+            }
+        }
+
+        function openModal(title, imageSrc) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            const modalTitle = document.getElementById('modalTitle');
+            
+            modalImg.src = imageSrc;
+            modalImg.alt = title;
+            modalTitle.textContent = title;
+            
+            modal.style.display = "block";
+        }
+
+        document.querySelector('.close').addEventListener('click', function() {
+            document.getElementById('imageModal').style.display = "none";
+        });
+
+        window.addEventListener('click', function(event) {
+            const modal = document.getElementById('imageModal');
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        });
+    </script>
+</body>
+</html>
